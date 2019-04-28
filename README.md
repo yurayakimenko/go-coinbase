@@ -15,7 +15,7 @@ The library was tested against coinbase.com APIv2
 
 ## Supported API Calls
 
-* Wallet Endpoints
+Wallet Endpoints
  - [x] Users
  - [x] Accounts
  - [x] Addresses
@@ -25,7 +25,8 @@ The library was tested against coinbase.com APIv2
  - [x] Deposits
  - [x] Withdrawals
  - [x] Payment methods
-* Data Endpoints
+
+Data Endpoints
  - [x] Currencies
  - [x] Exchange rates
  - [x] Prices
