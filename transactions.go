@@ -121,7 +121,6 @@ type APITransactionsSend struct {
 	Amount      float64 `json:"amount"`
 	Currency    string  `json:"currency"`
 	Description string  `json:"description"`
-	Fee         string  `json:"fee"`
 }
 
 // SendTransferRequestMoney requires an account ID, APITransactionsSend struct
