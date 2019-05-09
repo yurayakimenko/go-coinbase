@@ -65,7 +65,7 @@ const (
   ENDPOINT = "https://api.coinbase.com"
   // API_VERSION since version two you have to
   // specify a API version in your http request headers
-  API_VERSION = "2019-04-17"
+  API_VERSION = "2016-03-08"
 )
 
 // APIClient is the interface for most of the API calls
