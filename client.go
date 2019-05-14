@@ -50,13 +50,14 @@ package coinbase
 
 import (
   "bytes"
-  "fmt"
-  "encoding/json"
-  "net/http"
-  "crypto/sha256"
   "crypto/hmac"
-  "strconv"
+  "crypto/sha256"
+  "encoding/json"
+  "fmt"
   "io"
+  "net/http"
+  "net/url"
+  "strconv"
 )
 
 const (
@@ -76,7 +77,7 @@ type APIClient struct {
   Secret string
   Endpoint string
   ApiVersion string
-  Transport *http.Transport
+  Proxy string
 }
 
 // APIClientEpoch is used for decoding json "/v2/time" responses
@@ -98,8 +99,15 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
     // use default api version
     a.ApiVersion = API_VERSION
   }
+  proxyUrl, err := url.Parse(a.Proxy)
+  if err != nil {
+    return err
+  }
+  transport := &http.Transport{
+    Proxy: http.ProxyURL(proxyUrl),
+  }
   client := &http.Client{
-    Transport: a.Transport,
+    Transport: transport,
   }
   var bodyBuffered io.Reader
   if body != nil {
