@@ -99,15 +99,16 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
     // use default api version
     a.ApiVersion = API_VERSION
   }
-  proxyUrl, err := url.Parse(a.Proxy)
-  if err != nil {
-    return err
-  }
-  transport := &http.Transport{
-    Proxy: http.ProxyURL(proxyUrl),
-  }
-  client := &http.Client{
-    Transport: transport,
+  client := &http.Client{}
+  if len(a.Proxy) > 0 {
+    proxyUrl, err := url.Parse(a.Proxy)
+    if err != nil {
+      return err
+    }
+    transport := &http.Transport{
+      Proxy: http.ProxyURL(proxyUrl),
+    }
+    client.Transport = transport
   }
   var bodyBuffered io.Reader
   if body != nil {
