@@ -76,6 +76,7 @@ type APIClient struct {
   Secret string
   Endpoint string
   ApiVersion string
+  Transport *http.Transport
 }
 
 // APIClientEpoch is used for decoding json "/v2/time" responses
@@ -97,8 +98,9 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
     // use default api version
     a.ApiVersion = API_VERSION
   }
-
-  client := &http.Client{}
+  client := &http.Client{
+    Transport: a.Transport,
+  }
   var bodyBuffered io.Reader
   if body != nil {
     data, err := json.Marshal(body)
