@@ -52,6 +52,7 @@ import (
   "bytes"
   "crypto/hmac"
   "crypto/sha256"
+  "crypto/tls"
   "encoding/json"
   "fmt"
   "io"
@@ -99,7 +100,12 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
     // use default api version
     a.ApiVersion = API_VERSION
   }
-  client := &http.Client{}
+  tr := &http.Transport{
+    TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+  }
+  client := &http.Client{
+    Transport: tr,
+  }
   if len(a.Proxy) > 0 {
     proxyUrl, err := url.Parse(a.Proxy)
     if err != nil {
